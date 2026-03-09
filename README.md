@@ -94,7 +94,7 @@ node local_file_bridge.js
 ### 验证安装
 1. 刷新DeepSeek页面
 2. 查看右下角状态指示器（🟢绿色表示已连接）
-3. 尝试读取文件：`读取D:\test\example.txt`
+3. 尝试读取文件：`读取你的绝对路径文件（例如 /Users/me/test/example.txt 或 C:\Users\me\test\example.txt）`
 
 ## 📖 使用指南
 
@@ -112,7 +112,7 @@ AI：[[COMMAND={"action":"read_file","file_path":"/Users/me/project/config.json"
 ```json
 [[COMMAND={
   "action": "update_section",
-  "file_path": "D:\\\\project\\\\app.js",
+  "file_path": "/project/app.js",
   "old_content_start": "function calculate() {",
   "old_content_end": "}  // calculate结束",
   "new_content": "function calculate() {\n  // 优化后的算法\n  return result * 1.1;\n}"
@@ -183,12 +183,14 @@ deepseek-skills/
 ```javascript
 const CONFIG = {
     PORT: 8765,                    // 服务端口（可自定义）
-    ALLOWED_PATHS: [],             // 空数组=允许所有路径
+    ALLOWED_PATHS: [],             // 访问白名单；空数组=允许所有路径（不是工作目录）
     MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB文件大小限制
     BACKUP_DIR: '.deepseek_backups', // 备份目录名称
     DEBUG: true                    // 调试模式
 };
 ```
+
+> 路径说明：本项目不会把工作目录固定到某个盘符。文件读写以命令中的 `file_path`/`dir_path` 为准，建议始终使用绝对路径。
 
 ### 网页脚本配置 (`deepseek_skills.js`)
 ```javascript
